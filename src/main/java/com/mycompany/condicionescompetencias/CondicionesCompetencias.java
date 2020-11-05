@@ -10,60 +10,21 @@ package com.mycompany.condicionescompetencias;
  * @author Manev
  */
 public class CondicionesCompetencias extends javax.swing.JFrame {
- 
-    int algoritmo = 0;
+
     /**
      * Creates new form CondicionesCompetencias
      */
     public CondicionesCompetencias() {
           initComponents();//SE CREA AREA DE TEXTO
           rc = new RCompartido();
-          //Condiciones Competencia
-          tc1 = new HiloC(area1,rc);
-          tc1.setName("Perrito-1");
-          tc2 = new HiloC(area2,rc);
-          tc2.setName("Perrito-2");
-          tc3 = new HiloC(area3,rc);
-          tc3.setName("Perrito-3");
-          tc4 = new HiloC(area4,rc);
-          tc4.setName("Perrito-4");
-          //Cerradura
           t1 = new Hilo(area1,rc);
-          t1.setName("Perrito-1");
+          t1.setName("Perrito1");
           t2 = new Hilo(area2,rc);
-          t2.setName("Perrito-2");
+          t2.setName("Perrito2");
           t3 = new Hilo(area3,rc);
-          t3.setName("Perrito-3");
+          t3.setName("Perrito3");
           t4 = new Hilo(area4,rc);
-          t4.setName("Perrito-4");
-          //interrupciones
-          tint1 = new HiloInt(area1,rc, 550);
-          tint1.setName("Perrito-1");
-          tint2 = new HiloInt(area2,rc, 600);
-          tint2.setName("Perrito-2");
-          tint3 = new HiloInt(area3,rc,650);
-          tint3.setName("Perrito-3");
-          tint4 = new HiloInt(area4,rc,700);
-          tint4.setName("Perrito-4");
-          //Mutex
-          tm1 = new HiloM(area1,rc, true);//solo dejamos este hilo con true para que este semaforo sea el que pase primero y luego los demas en orden
-          tm1.setName("Perrito-1");
-          tm2 = new HiloM(area2,rc, false);
-          tm2.setName("Perrito-2");
-          tm3 = new HiloM(area3,rc, false);
-          tm3.setName("Perrito-3");
-          tm4 = new HiloM(area4,rc, false);
-          tm4.setName("Perrito-4");
-          //Dekker
-          ModeloExclusion alg = new Decker(); // alternar entre los algoritmos
-           hilo1 = new HiloD(area1, rc, "Perrito-1", 1, alg);
-           hilo1.setName("Perrito-1");
-           hilo2 = new HiloD(area2, rc, "Perrito-2", 0, alg);
-           hilo2.setName("Perrito-2");
-           hilo3 = new HiloD(area3, rc, "Perrito-3", 0, alg);
-           hilo3.setName("Perrito-3");
-           hilo4 = new HiloD(area4, rc, "Perrito-4", 0, alg);
-           hilo4.setName("Perrito-4");
+          t4.setName("Perrito4");
     }
 
     /**
@@ -76,9 +37,9 @@ public class CondicionesCompetencias extends javax.swing.JFrame {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
-        textArea1 = new java.awt.TextArea();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         area1 = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -91,29 +52,27 @@ public class CondicionesCompetencias extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        Cerradura = new javax.swing.JMenuItem();
-        Interrupciones = new javax.swing.JMenuItem();
-        Dijkstra = new javax.swing.JMenuItem();
-        alternancia = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle(" Practicas Finales de Entrenamiento");
 
-        jButton1.setText("CORRER");
+        jButton1.setText("correr");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        jButton2.setText("KILL");
+        jButton2.setText("pausa");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("Terminar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
             }
         });
 
@@ -145,60 +104,6 @@ public class CondicionesCompetencias extends javax.swing.JFrame {
 
         jLabel4.setText("Plato 4");
 
-        jMenu1.setText("Algoritmos");
-
-        Cerradura.setText("Cerradura");
-        Cerradura.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CerraduraActionPerformed(evt);
-            }
-        });
-        jMenu1.add(Cerradura);
-
-        Interrupciones.setText("Desact. Interrup");
-        Interrupciones.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                InterrupcionesActionPerformed(evt);
-            }
-        });
-        jMenu1.add(Interrupciones);
-
-        Dijkstra.setText("Mutex");
-        Dijkstra.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                DijkstraActionPerformed(evt);
-            }
-        });
-        jMenu1.add(Dijkstra);
-
-        alternancia.setText("Alternancia Estricta");
-        alternancia.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                alternanciaActionPerformed(evt);
-            }
-        });
-        jMenu1.add(alternancia);
-
-        jMenuItem1.setText("Condiciones Competencia");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItem1);
-
-        jMenuBar1.add(jMenu1);
-
-        jMenu2.setText("Ayuda");
-        jMenu2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenu2ActionPerformed(evt);
-            }
-        });
-        jMenuBar1.add(jMenu2);
-
-        setJMenuBar(jMenuBar1);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -206,8 +111,10 @@ public class CondicionesCompetencias extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(64, 64, 64)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jButton2)
+                        .addComponent(jButton1))
+                    .addComponent(jButton3))
                 .addGap(34, 34, 34)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(58, 58, 58)
@@ -216,7 +123,7 @@ public class CondicionesCompetencias extends javax.swing.JFrame {
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(79, 79, 79)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addContainerGap(32, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(220, 220, 220)
                 .addComponent(jLabel1)
@@ -243,11 +150,13 @@ public class CondicionesCompetencias extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton1)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton2))
+                        .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton3))
                     .addComponent(jScrollPane1)
                     .addComponent(jScrollPane3)
                     .addComponent(jScrollPane4))
-                .addContainerGap(74, Short.MAX_VALUE))
+                .addContainerGap(100, Short.MAX_VALUE))
         );
 
         pack();
@@ -255,100 +164,18 @@ public class CondicionesCompetencias extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        if(algoritmo ==1){
-        t1.matar();
-        }else{
-          if(algoritmo == 2){
-             tint1.matar();
-          }else{
-            if(algoritmo == 3){
-               tm1.matar();
-            }else{
-               if(algoritmo == 0){
-                  tc1.matar();
-               }else{
-                 if(algoritmo == 4){
-                  hilo1.matar();
-                 }
-               }
-            }
-          }
-        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       
-        if(algoritmo == 0){//estara deafult condiciones
-            tc1.start();
-            tc2.start();
-            tc3.start();
-            tc4.start();
-            
-        }else{
-          if(algoritmo ==1){//si escogen cerradura
-            t1.start();
-            t2.start();
-            t3.start();
-            t4.start();
-       }else{
-           if(algoritmo == 2){//si escogen interruociones
-             tint1.start();
-             tint2.start();
-             tint3.start();
-             tint4.start();
-           }else{
-               if(algoritmo == 3){//si a seleccionado Mutex
-                 tm1.start();
-                 tm2.start();
-                 tm3.start();
-                 tm4.start();
-               }else{
-                   if(algoritmo == 4){//si a seleccionado dekker
-                        hilo1.start();
-                        hilo2.start();
-                        hilo3.start();
-                        hilo4.start();
-                   }else{
-                     System.out.println("No haz seleccionado ningun algoritmo");
-                   }
-                 
-               }
-           }
-       }
-      }
-        
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void CerraduraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CerraduraActionPerformed
-        System.out.println("cerraduraaaaaaaaaaaaaaa");
-        algoritmo = 1;
-    }//GEN-LAST:event_CerraduraActionPerformed
-
-    private void DijkstraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DijkstraActionPerformed
-        System.out.println("muteeeex");
-        algoritmo = 3;
-    }//GEN-LAST:event_DijkstraActionPerformed
-
-    private void InterrupcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InterrupcionesActionPerformed
-        System.out.println("interrupcioneeeees");
-        algoritmo = 2;
-    }//GEN-LAST:event_InterrupcionesActionPerformed
-
-    private void alternanciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alternanciaActionPerformed
-        System.out.println("alternanciaaaaaa");
-        algoritmo = 4;
-    }//GEN-LAST:event_alternanciaActionPerformed
-
-    private void jMenu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu2ActionPerformed
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        
-    }//GEN-LAST:event_jMenu2ActionPerformed
+    }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        System.out.println("Condicioneeeeees");
-        algoritmo = 0;
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       t1.start();
+       t2.start();
+       t3.start();
+       t4.start();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -386,10 +213,6 @@ public class CondicionesCompetencias extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem Cerradura;
-    private javax.swing.JMenuItem Dijkstra;
-    private javax.swing.JMenuItem Interrupciones;
-    private javax.swing.JMenuItem alternancia;
     private javax.swing.JTextArea area1;
     private javax.swing.JTextArea area2;
     private javax.swing.JTextArea area3;
@@ -397,24 +220,16 @@ public class CondicionesCompetencias extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private java.awt.TextArea textArea1;
     // End of variables declaration//GEN-END:variables
-    private Hilo t1, t2, t3, t4;//Hilos Cerraduras
-    private HiloInt tint1, tint2, tint3, tint4;//hilos de interrupciones
-    private HiloM tm1, tm2, tm3, tm4;//hilos mutex
-    private HiloC tc1, tc2, tc3, tc4;//Hilos condiciones
-     private HiloD hilo1, hilo2, hilo3, hilo4;//dekker
+    private Hilo t1, t2, t3, t4;
     private RCompartido rc;
 }    
